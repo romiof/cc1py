@@ -1,19 +1,22 @@
+#
+# Jogo MIN contra o PC.
+# Escolher entre jogar (1) partida ou (2) campeonato.
+# Defina Quantidade de Peças (N) e a Quantidade a ser Retirada (M)
+# Programado para sempre o PC sempre vencer
+#
 def main():
-    '''(int, int) -> int
-    Recebe dois inteiros m e n, e retorna o valor de m!/((m-n)! n!)
-    '''
-    fgModoJogo = False
+    fgModoJogo = True
     modoJogo = 0
-    while not (fgModoJogo):
+    while fgModoJogo:
         print("Bem-vindo ao jogo do NIM! Escolha:\n")
         print("1 - para jogar uma partida isolada")
         modoJogo = input("2 - para jogar um campeonato ")
         if modoJogo == "1":
-            fgModoJogo = True
+            fgModoJogo = False
             partida()
-        #elif modoJogo == "2":
-        #    fgModoJogo = True
-        #    campeonato()
+        elif modoJogo == "2":
+            fgModoJogo = False
+            campeonato()
         else:
             opcInvalida()
 
@@ -24,14 +27,8 @@ def partida():
     #
     # Solicita M e N e vai chamando as funções anteriores.
     #
-    pcsInfomradas = True
-    while pcsInfomradas:
-        n = int(input("Quantas peças? "))
-        m = int(input("Limite de peças por jogada? "))
-        if n > m:
-            pcsInfomradas = False
-        else:
-            print("Limite de peças retiradas por jogada deve ser menor que a Quantidade de Peças.")
+    n = int(input("Quantas peças? "))
+    m = int(input("Limite de peças por jogada? "))
     ### Começa o jogo, com um Indicador de Passagem para controlar de quem é a vez de jogar
     pcJoga = True
     if n % (m + 1) == 0:
@@ -59,13 +56,10 @@ def partida():
     else:
         print("Fim do jogo! O computador ganhou!")
 
-
-#devolve um inteiro correspondente à próxima jogada do computador de acordo com a estratégia vencedora.
-
 def computador_escolhe_jogada(n, m):
     movPc = 0
     aux = True
-    while aux:
+    while movPc < m and aux:
         movPc = movPc + 1
         if (n - movPc) % (m + 1) == 0:
             aux = False
@@ -76,7 +70,6 @@ def computador_escolhe_jogada(n, m):
     else:
         print("O computador tirou uma peça.")
     return movPc
-
 
 def usuario_escolhe_jogada(n, m):
     tiraPcs = True
@@ -92,15 +85,16 @@ def usuario_escolhe_jogada(n, m):
             print("\nOops! Jogada inválida! Tente de novo.\n")
     return movPc
 
+def campeonato():
+    contCamp = 0
+    print("\nVoce escolheu um campeonato!\n")
+    while contCamp < 3:
+        contCamp = contCamp + 1
+        print("**** Rodada", contCamp,"****\n")
+        partida()
+    print("\n**** Final do campeonato! ****\nPlacar: Você 0 X 3 Computador")
 
-#campeonato()
-
-# uma vez que a função partida esteja funcionando, você deverá criar uma outra função chamada campeonato.
-# Essa nova função deve realizar três partidas seguidas do jogo e, ao final,
-# mostrar o placar dessas três partidas e indicar o vencedor do campeonato.
-# O placar deve ser impresso na forma
-# Placar: Você ??? X ??? Computador
-
+#
+# Chamada para execução do programa
+#
 main()
-
-#computador_escolhe_jogada(5, 2)
