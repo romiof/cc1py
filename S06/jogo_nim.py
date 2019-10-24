@@ -17,7 +17,6 @@ def main():
         else:
             opcInvalida()
 
-
 def opcInvalida():
     print("\nOops! Jogada inválida! Tente de novo.\n")
 
@@ -25,9 +24,16 @@ def partida():
     #
     # Solicita M e N e vai chamando as funções anteriores.
     #
-    n = int(input("Quantas peças? "))
-    m = int(input("Limite de peças por jogada? "))
-    pcJoga = True ### Indicador de Passagem para controlar que é a vez de jogar
+    pcsInfomradas = True
+    while pcsInfomradas:
+        n = int(input("Quantas peças? "))
+        m = int(input("Limite de peças por jogada? "))
+        if n > m:
+            pcsInfomradas = False
+        else:
+            print("Limite de peças retiradas por jogada deve ser menor que a Quantidade de Peças.")
+    ### Começa o jogo, com um Indicador de Passagem para controlar de quem é a vez de jogar
+    pcJoga = True
     if n % (m + 1) == 0:
         print("\nVoce começa!\n")
         pcJoga = False
@@ -58,21 +64,17 @@ def partida():
 
 def computador_escolhe_jogada(n, m):
     movPc = 0
-    if n > m + 1:
-        movPc = m
-        if movPc > 1:
-            print("O computador tirou", movPc, "peças.")
-        else:
-            print("O computador tirou uma peça.")
-    elif n == 1:
-        movPc = 1
-        print("O computador tirou uma peça.")
-    elif n < m:
-        movPc = n
+    aux = True
+    while aux:
+        movPc = movPc + 1
+        if (n - movPc) % (m + 1) == 0:
+            aux = False
+        elif movPc == n:
+            aux = False
+    if movPc > 1:
         print("O computador tirou", movPc, "peças.")
     else:
-        movPc = m
-        print("O computador tirou", movPc, "peças.")
+        print("O computador tirou uma peça.")
     return movPc
 
 
@@ -80,7 +82,7 @@ def usuario_escolhe_jogada(n, m):
     tiraPcs = True
     while tiraPcs:
         movPc = int(input("Quantas peças você vai tirar? "))
-        if movPc <= m:
+        if movPc <= m and movPc <= n and movPc > 0:
             if movPc > 1:
                 print("\nVocê tirou", movPc, "peças.")
             else:
@@ -100,3 +102,5 @@ def usuario_escolhe_jogada(n, m):
 # Placar: Você ??? X ??? Computador
 
 main()
+
+#computador_escolhe_jogada(5, 2)
